@@ -42,17 +42,17 @@ console.log(multiplication(5, 8));
 
 
 
-interface Employee{
+interface Emplo{
     name:string;
     age:number;
     address:string;
 }
-function newEmployee(employee:Employee){
+function newEmployee(employee:Emplo){
     return employee;
 }
 
-const employ = newEmployee({name:"fazal",age:25,address:"Rawalpindi"})
-console.log(employ)
+const emplooy = newEmployee({name:"fazal",age:25,address:"Rawalpindi"})
+console.log(emplooy)
 
 //---------------------------------------------------------------------
 
@@ -79,7 +79,66 @@ let total = marks.reduce((sum, m) => sum + m, 0);
 // combination of both number as well as string
 
 let country:[string,number] = ["pakistan",1]
-console.log(country)
+// console.log(country)
 
 let emp:[number,string,boolean] = [1,"arshad",true]
-console.log(`Employee id : ${emp[0]} , Employee name : ${emp[1]} , Employee present : ${emp[2]}`)
+// console.log(`Employee id : ${emp[0]} , Employee name : ${emp[1]} , Employee present : ${emp[2]}`)
+
+// ----------------------------------------------------------
+
+// Interfaces
+// a powerful way to define the shape, contract, or structural blueprint of an object
+
+
+interface person{
+  id:number;
+  name:string;
+  location:string;
+  age:number;
+  present:boolean
+}
+// const Person:person = {id:12,name:"Usama",location:"rawalpindi",age:33,present:false}
+
+
+
+interface User {
+  name: string;
+  age?: number;   // optional — dena zaroori nahi
+}
+let user1: User = { name: "Ali" };            // correct
+let user2: User = { name: "Sara", age: 25 };  // correct B/C age is optional
+
+
+
+interface Product {
+  readonly id: number;
+  title: string;
+}
+let product1: Product = { id: 1, title: "Phone" };
+product1.title = "Laptop"; 
+
+
+
+type places = "Gilgit" | "Karachi" | "Islamabad"
+type visite = {
+  name:string;
+  visiting_place:places
+}
+const Destination : visite = {name:"Abdullah", visiting_place:"Gilgit"}
+// const destination : visite = {name:"Shoaib", visiting_place:"Gilgit_Baltistan"} error
+console.log(Destination)
+
+
+
+interface createproductDTO {
+  title:string;
+  name:string;
+  price?: number;
+}
+interface updateproductDTO extends createproductDTO{
+  readonly id :number
+}
+function updateproduct(data : updateproductDTO){
+  console.log(`product number : ${data.id} , product title : ${data.title} , product name : ${data.name}`)
+}
+updateproduct({id:22,title:"laptop",name:"lenovo"})
