@@ -109,3 +109,166 @@
 
 // let found = findById(users, 1);
 // console.log(found);   // { id: 1, name: "Ali" }
+
+
+
+// 08 · Union, Intersection & Literal Types
+// Understand the Concept First
+// Union (|) = "Either this or that" — the value can be one of multiple types.
+// Intersection (&) = "Both this and that" — the value must include all properties from both types.
+// Literal types = Turn specific fixed values into types (for example, only "GET" or "POST" instead of any string).
+
+// let id: string | number;
+// id = "abc123";   // corect
+// id = 123;          // correct
+// id = true;         // Error! boolean not allowed 
+
+
+
+// type Name = { name: string };
+// type Age = { age: number };
+// type Person = Name & Age;   // both are needed
+// let p1: Person = { name: "Ali", age: 25 };  
+
+
+
+// type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+// function makeRequest(method: HttpMethod, url: string) {
+//   console.log(`${method} request to ${url}`);
+// }
+// makeRequest("GET", "/users");     //  correct
+// makeRequest("PATCH", "/users");   //  Error! "PATCH" not allowed
+
+
+
+
+// type SuccessResponse = { status: "success"; data: string };
+// type ErrorResponse = { status: "error"; message: string };
+// type ApiResult = SuccessResponse | ErrorResponse;
+// function handleResponse(res: ApiResult) {
+//   if (res.status === "success") {
+//     console.log(res.data);      
+//   } else {
+//     console.log(res.message);  
+//   }
+// }
+
+
+
+
+// Enum approach
+// enum Role {
+//   Admin = "ADMIN",
+//   User = "USER",
+//   Guest = "GUEST"
+// }
+// function checkAccess(role: Role) {
+//   if (role === Role.Admin) {
+//     console.log("Full access");
+//   }
+// }
+// checkAccess(Role.Admin);   // Role.Admin use karna padta hai
+// // Literal union approach (lightweight alternative)
+// type RoleType = "ADMIN" | "USER" | "GUEST";
+
+// function checkAccess2(role: RoleType) {
+//   if (role === "ADMIN") {
+//     console.log("Full access");
+//   }
+// }
+// checkAccess2("ADMIN");   // you can direct write string
+
+
+
+
+// 09 · Type Narrowing & Guards
+// Understand the Concept First
+// When you have a union type (such as string | number), TypeScript does not know the exact type at that moment until you check (or narrow) it.
+// Narrowing means using conditions (such as if statements) to tell TypeScript that:
+// "Inside this specific block of code, this variable is definitely of a particular type."
+
+
+// function printValue(value: string | number) {
+//   if (typeof value === "string") {
+//     console.log(value.toUpperCase());   
+//   } else {
+//     console.log(value.toFixed(2));
+//   }
+// }
+// printValue("hello");   // HELLO
+// printValue(5.6789);     // 5.68
+
+
+
+// function greet(name?: string) {
+//   if (name) {
+//     console.log(`Hello, ${name}`);   
+//   } else {
+//     console.log("Hello, Guest");
+//   }
+// }
+// greet("Ali");    // Hello, Ali
+// greet();          // Hello, Guest
+
+
+
+// class Dog {
+//   bark() { console.log("Woof!"); }
+// }
+
+// class Cat {
+//   meow() { console.log("Meow!"); }
+// }
+
+// function makeSound(animal: Dog | Cat) {
+//   if (animal instanceof Dog) {
+//     animal.bark();  
+//   } else {
+//     animal.meow();  
+//   }
+// }
+// makeSound(new Dog());   // Woof!
+// makeSound(new Cat());   // Meow!
+
+
+
+
+// interface SuccessResult {
+//   status: "success";
+//   data: string;
+// }
+// interface ErrorResult {
+//   status: "error";
+//   errorCode: number;
+// }
+// interface LoadingResult {
+//   status: "loading";
+// }
+// type ApiState = SuccessResult | ErrorResult | LoadingResult;
+
+// function handleState(state: ApiState) {
+//   switch (state.status) {
+//     case "success":
+//       console.log(state.data);        
+//       break;
+//     case "error":
+//       console.log(state.errorCode); 
+//       break;
+//     case "loading":
+//       console.log("Loading...");      // koi extra field nahi
+//       break;
+//   }
+// }
+
+
+
+
+
+// interface Cat { type: "cat"; meow: () => void; }
+// interface Dog { type: "dog"; bark: () => void; }
+// type Pet = Cat | Dog;
+
+// function makeSound(pet: Pet) {
+  // Discriminated union se 'type' field check karke
+  // sahi method call karo
+// }
